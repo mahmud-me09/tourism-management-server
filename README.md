@@ -1,0 +1,1 @@
+live server: https://tourism-management-server-bbnjm22yg-mahmud-hasan-khans-projects.vercel.app/
