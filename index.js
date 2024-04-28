@@ -56,6 +56,12 @@ async function run() {
 			const touristSpot = await touristSpotCollection.findOne(query);
 			res.send(touristSpot);
 		})
+		app.get("/mylist/:id",async(req,res)=>{
+			const id = req.params.id;
+			const query = { _id: new ObjectId(id) };
+			const touristSpot = await touristSpotCollection.findOne(query);
+			res.send(touristSpot);
+		})
 
 		app.get("/alltouristsspot", async(req,res)=>{
 			const cursor = touristSpotCollection.find()
@@ -68,6 +74,21 @@ async function run() {
 			const result = await touristSpotCollection.insertOne(newTouristSpot)
 			res.send(result)
 		});
+		app.put("/mylist/:id",async (req,res)=>{
+			const id = req.params.id
+			const query = { _id: new ObjectId(id) }
+			const data = req.body
+			const updatedData = {$set: data }
+			const option = {upsert:true}
+			const result = await touristSpotCollection.updateOne(query,updatedData,option)
+			res.send(result)
+		});
+		app.delete("/mylist/:id",async (req,res)=>{
+			const id = req.params.id;
+			const query = { _id: new ObjectId(id) };
+			const result = await touristSpotCollection.deleteOne(query)
+			res.send(result)
+		})
 
 		app.listen(port, () => {
 			console.log(`Example app listening on port ${port}`);
